@@ -1,12 +1,17 @@
-import "./global.css"
-import { Text, View } from "react-native";
- 
+import React, { useState } from "react";
+import { NavigationContainer } from "@react-navigation/native";
+import AuthNavigator from "./src/navigation/AuthNavigator";
+import TabNavigator from "./src/navigation/TabNavigator";
+import AuthContext from "./src/context/AuthContext";
+
 export default function App() {
+  const [user, setUser] = useState(null);
+
   return (
-    <View className="flex-1 items-center justify-center bg-black">
-      <Text className="text-xl font-bold text-red-500">
-        Welcome to Nativewind!
-      </Text>
-    </View>
+    <AuthContext.Provider value={{ user, setUser }}>
+      <NavigationContainer>
+        {user ? <TabNavigator /> : <AuthNavigator />}
+      </NavigationContainer>
+    </AuthContext.Provider>
   );
 }
